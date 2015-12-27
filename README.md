@@ -1,6 +1,13 @@
 # SK
 
-**TODO: Add description**
+_This is nothing but a playground; view the test if interested!_
+
+...it is a Maybe that contains a value or not. If it doesn't,
+it says that is :none, otherwise, it's the actual value.
+
+To build one, you call `Maybe.from("some dumb value)`, which will eventuall wrap the value
+inside a tuple - `{:some, value}` - although it may be better as a structure, something as
+`%Maybe.Some{value}`
 
 ## Installation
 
