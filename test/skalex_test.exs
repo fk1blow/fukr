@@ -10,17 +10,22 @@ defmodule SKTest do
   end
 
   test "should not run the function, if i create a Maybe with a nil" do
-    x = true
-    Maybe.from(nil) |> Maybe.map(fn val -> x = false end)
-    assert x
+    res = Maybe.from(nil) |> Maybe.map(fn _ -> true end)
+    assert res == :none
   end
 
   test "should run `or_else` instead of `map`, if i create a Maybe with a nil" do
-    x = true
-    Maybe.from(nil)
-    |> Maybe.map(fn val -> x = false end)
+    res = Maybe.from(nil)
+    |> Maybe.map(fn _ -> true end)
     |> Maybe.or_else(fn val -> val end)
-    assert x
+    assert res == :none
+  end
+
+  test "should run `map` instead of `or_else`, if i create a Maybe with a value" do
+    res = Maybe.from(true)
+    |> Maybe.map(fn val -> val end)
+    |> Maybe.or_else(fn _ -> false end)
+    assert res == {:some, true}
   end
 
   test "should run the `map` function, if i create a Maybe with a value" do
