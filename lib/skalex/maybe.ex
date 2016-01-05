@@ -6,26 +6,28 @@ defmodule SK.Maybe do
   @doc """
     Creates a new Maybe
   """
-  def from(value) when is_nil(value), do: {:none, nil}
+  def from(nil), do: :none
+  def from(false), do: :none
+  def from(:none), do: :none
   def from(value), do: {:some, value}
 
   @doc """
     Map over the maybe, applying the value to the provided callback function,
-    or does nothing, if {:none, nil}
+    or does nothing {:none, nil}
   """
-  def map({:none, nil}, callback), do: {:none, nil}
+  def map(:none, callback), do: :none
   def map({:some, value}, callback), do: SK.Maybe.from(callback.(value))
 
   @doc """
     Transforms into a plain value if {:none, nil}, or simply returns the some
   """
-  def or_else({:none, nil}, callback), do: callback.(nil)
+  def or_else(:none, callback), do: callback.(nil)
   def or_else({:some, value}, callback), do: {:some, value}
 
   @doc """
     Extract the value of the `Maybe`
   """
-  def get({:none, _}), do: nil
   def get({:some, value}), do: value
+  def get(:none), do: :none
   def get(value), do: value
 end
